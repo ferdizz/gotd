@@ -30,5 +30,6 @@ jobs:
       with:
         node-version: '12.x'
     - name: Install dependencies
-    - run: yarn --frozen-lockfile
-    - run: npm run deploy
+      run: | 
+        yarn --frozen-lockfile
+        yarn run deploy
