@@ -5,7 +5,7 @@ import { GiphyFetch } from "@giphy/js-fetch-api";
 import { useAsync } from "react-async-hook";
 
 const gf = new GiphyFetch("Nj6LZljJuQpa0hgKv8EgPADpxhgWawkH");
-const trendingWord = "TRENDING WORD";
+const trendingWord = "TRENDING";
 
 type Props = {
   size: number;
