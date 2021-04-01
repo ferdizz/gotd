@@ -32,4 +32,6 @@ jobs:
     - name: Install dependencies
       run: | 
         yarn --frozen-lockfile
+        git config --local user.email "$(git log --format='%ae' HEAD^!)"
+        git config --local user.name "$(git log --format='%an' HEAD^!)"
         yarn run deploy
