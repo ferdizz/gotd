@@ -3,9 +3,9 @@ import { IGif } from "@giphy/js-types";
 import { Gif } from "@giphy/react-components";
 import { GiphyFetch } from "@giphy/js-fetch-api";
 import { useAsync } from "react-async-hook";
+import { useTrending } from "./use-trending";
 
 const gf = new GiphyFetch("Nj6LZljJuQpa0hgKv8EgPADpxhgWawkH");
-const trendingWord = "TRENDING WORD";
 
 type Props = {
   size: number;
@@ -13,14 +13,16 @@ type Props = {
 
 export const Giphy: React.FC<Props> = ({ size }) => {
   const [gif, setGif] = React.useState<IGif | null>(null);
+  const { loading, query } = useTrending();
 
   useAsync(async () => {
-    const { data } = await gf.search(trendingWord, {
+    if (loading) return;
+    const { data } = await gf.search(query, {
       sort: "relevant",
       limit: 1,
     });
     setGif(data[0]);
-  }, []);
+  }, [loading, query]);
 
   if (!gif) return <span>loading gif...</span>;
 
