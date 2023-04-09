@@ -1,7 +1,12 @@
 import React from "react";
-import { Giphy } from "./giphy";
+import { Gif } from "@giphy/react-components";
+import { IGif } from "@giphy/js-types";
 
-export const GIFContainer: React.FC = () => {
+interface Props {
+  gif: IGif;
+}
+
+export const GIFContainer: React.FC<Props> = ({ gif }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [containerSize, setContainerSize] = React.useState(100);
 
@@ -17,7 +22,7 @@ export const GIFContainer: React.FC = () => {
 
   return (
     <div ref={containerRef} style={{ height: "50vh" }}>
-      <Giphy size={containerSize} />
+      <Gif gif={gif} width={containerSize} />
     </div>
   );
 };
