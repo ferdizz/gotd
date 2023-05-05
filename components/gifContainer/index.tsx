@@ -21,7 +21,7 @@ export const GIFContainer: React.FC<Props> = ({ gif }) => {
   }, [handleResize]);
 
   return (
-    <div ref={containerRef} style={{ height: "50vh" }}>
+    <div ref={containerRef} style={{ marginBottom: 20 }}>
       <Gif gif={gif} width={containerSize} />
     </div>
   );

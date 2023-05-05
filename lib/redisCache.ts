@@ -2,7 +2,7 @@ import Redis from "ioredis";
 
 const redisConnect = new Redis(process.env.REDIS_URL || "");
 
-const getKey = async <T>(key: string): Promise<T | null> => {
+export const getKey = async <T>(key: string): Promise<T | null> => {
   const result = await redisConnect.get(key);
   if (result) return JSON.parse(result);
   return null;

@@ -1,16 +1,21 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { IGif } from "@giphy/js-types";
-import { GIFContainer } from "../components/container";
+import { GIFContainer } from "../components/gifContainer";
 import { getGiphyData } from "../lib/giphy";
 import styles from "../styles/Home.module.css";
 import { getTrending } from "../lib/trending";
+import GameContainer from "../components/gameContainer";
+import { useState } from "react";
 
 interface Data {
-  gif: IGif;
+  gifs: IGif[];
+  trending: string;
 }
 
-const Home: NextPage<Data> = ({ gif }) => {
+const Home: NextPage<Data> = ({ gifs, trending }) => {
+  const [gifIndex, setGifIndex] = useState(0);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -19,9 +24,13 @@ const Home: NextPage<Data> = ({ gif }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div style={{ margin: "0 auto", width: "80%" }}>
+      <div style={{ margin: "0 auto", width: "99%" }}>
         <h1 className="title">GIF of the day</h1>
-        <GIFContainer gif={gif} />
+        <GIFContainer gif={gifs[gifIndex]} />
+        <GameContainer
+          wordToGuess={trending.toLowerCase()}
+          onGuess={() => setGifIndex(gifIndex + 1)}
+        />
       </div>
     </div>
   );
@@ -29,10 +38,10 @@ const Home: NextPage<Data> = ({ gif }) => {
 
 export async function getServerSideProps() {
   const trending = await getTrending();
-  const gif = await getGiphyData(trending);
+  const gifs = await getGiphyData(trending);
 
   return {
-    props: { gif }
+    props: { gifs, trending }
   };
 }
 
